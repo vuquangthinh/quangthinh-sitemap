@@ -30,11 +30,11 @@ export class SiteMap<T extends UrlItem = UrlItem> {
   constructor() {
     this.doc = create({
       version: "1.0",
+      encoding: "UTF-8",
     });
 
     this.root = this.doc.ele("urlset", {
       xmlns: SITEMAP_NS,
-      encoding: 'UTF-8'
     });
   }
 
