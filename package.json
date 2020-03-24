@@ -1,6 +1,6 @@
 {
   "name": "quangthinh-sitemap",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Sitemap Generator",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,10 +24,11 @@
   "files": [
     "lib/**/*"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "xmlbuilder2": "^1.7.0"
+  },
   "devDependencies": {
     "@types/jest": "^25.1.4",
-    "@types/xmldom": "^0.1.29",
     "jest": "^25.1.0",
     "prettier": "^2.0.2",
     "ts-jest": "^25.2.1",

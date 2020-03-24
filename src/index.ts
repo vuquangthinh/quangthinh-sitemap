@@ -14,23 +14,40 @@
 //   </url>
 // </urlset>
 
+import { create } from 'xmlbuilder2';
+import { XMLBuilder } from 'xmlbuilder2/lib/interfaces';
+
 import { SITEMAP_NS } from './constants';
 import { UrlItem } from './UrlItem';
 
+export { UrlItem };
+export * from "./NewsItem";
+
 export class SiteMap<T extends UrlItem = UrlItem> {
-  private doc: Document;
+  private doc: XMLBuilder;
+  private root: XMLBuilder;
 
   constructor() {
-    this.doc = document.implementation.createDocument(SITEMAP_NS, "urlset", null);
+    this.doc = create({
+      version: "1.0",
+    });
+
+    this.root = this.doc.ele("urlset", {
+      xmlns: SITEMAP_NS,
+      encoding: 'UTF-8'
+    });
   }
 
   toString() {
-    return new XMLSerializer().serializeToString(this.doc);
+    return this.doc
+      .end({
+        prettyPrint: true,
+      })
+      .toString();
   }
 
   add(news: T) {
-    const node = news.toXmlNode(this.doc);
-    this.doc.documentElement.appendChild(node);
+    news.toXmlNode(this.root);
     return this;
   }
 }

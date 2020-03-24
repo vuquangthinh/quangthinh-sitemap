@@ -1,4 +1,4 @@
-import { SITEMAP_NS } from './constants';
+import { XMLBuilder } from 'xmlbuilder2/lib/interfaces';
 
 export class UrlItem {
   public loc?: string;
@@ -7,13 +7,11 @@ export class UrlItem {
     Object.assign(this, props);
   }
 
-  toXmlNode(doc: Document) {
-    const node = doc.createElementNS(SITEMAP_NS, "url");
+  toXmlNode(doc: XMLBuilder) {
+    const node = doc.ele("url");
 
     if (this.loc) {
-      const item = doc.createElementNS(SITEMAP_NS, "loc");
-      item.appendChild(doc.createTextNode(this.loc));
-      node.appendChild(item);
+      node.ele("loc").txt(this.loc);
     }
 
     return node;

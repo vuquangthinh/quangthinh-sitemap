@@ -1,3 +1,5 @@
+import { XMLBuilder } from 'xmlbuilder2/lib/interfaces';
+
 export class NewsElement {
   static NS = "http://www.google.com/schemas/sitemap-news/0.9";
 
@@ -14,39 +16,32 @@ export class NewsElement {
     Object.assign(this, props);
   }
 
-  toXmlNode(doc: Document, prefix: string = "news"): Element {
-    const element = doc.createElementNS(NewsElement.NS, prefix + ":news");
+  toXmlNode(doc: XMLBuilder, prefix: string = "news"): XMLBuilder {
+    doc.root().att("xmlns:" + prefix, NewsElement.NS);
+    const element = doc.ele(prefix + ":news");
+
     if (this.publication) {
-      const pubNode = doc.createElementNS(NewsElement.NS, prefix + ":publication");
+      const pubNode = element.ele(prefix + ":publication");
       if (this.publication.name) {
-        const name = doc.createElementNS(NewsElement.NS, "name");
-        name.nodeValue = this.publication.name;
-        pubNode.appendChild(name);
+        pubNode.ele(prefix + ":name").txt(this.publication.name);
       }
       if (this.publication.language) {
-        const language = doc.createElementNS(NewsElement.NS, "name");
-        language.nodeValue = this.publication.language;
-        pubNode.appendChild(language);
+        pubNode.ele(prefix + ":language").txt(this.publication.language);
       }
 
       if (this.publication_date) {
-        const dateNode = doc.createElementNS(NewsElement.NS, "publication_date");
         let dateValue: any = this.publication_date;
+
         if (this.publication_date instanceof Date) {
           dateValue = this.publication_date.toISOString();
         }
 
-        dateNode.appendChild(doc.createTextNode(dateValue));
-        pubNode.appendChild(dateNode);
+        pubNode.ele(prefix + ":publication_date").txt(dateValue);
       }
 
       if (this.title) {
-        const titleNode = doc.createElementNS(NewsElement.NS, "title");
-        titleNode.appendChild(doc.createTextNode(this.title));
-        pubNode.appendChild(titleNode);
+        pubNode.ele(prefix + ":title").txt(this.title);
       }
-
-      element.appendChild(pubNode);
     }
 
     return element;

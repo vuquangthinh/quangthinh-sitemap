@@ -1,6 +1,9 @@
-import { SITEMAP_NS } from '../constants';
+import { XMLBuilder } from 'xmlbuilder2/lib/interfaces';
+
 import { UrlItem } from '../UrlItem';
 import { NewsElement } from './NewsElement';
+
+export { NewsElement };
 
 export class NewsItem extends UrlItem {
   public news?: NewsElement;
@@ -10,10 +13,10 @@ export class NewsItem extends UrlItem {
     this.news = props?.news;
   }
 
-  toXmlNode(doc: Document) {
+  toXmlNode(doc: XMLBuilder) {
     const node = super.toXmlNode(doc);
     if (this.news) {
-      node.appendChild(this.news.toXmlNode(doc));
+      this.news.toXmlNode(node);
     }
 
     return node;
