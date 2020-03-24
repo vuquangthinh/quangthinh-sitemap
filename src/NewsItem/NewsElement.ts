@@ -36,11 +36,11 @@ export class NewsElement {
           dateValue = this.publication_date.toISOString();
         }
 
-        pubNode.ele(prefix + ":publication_date").txt(dateValue);
+        element.ele(prefix + ":publication_date").txt(dateValue);
       }
 
       if (this.title) {
-        pubNode.ele(prefix + ":title").txt(this.title);
+        element.ele(prefix + ":title").txt(this.title);
       }
     }
 
